@@ -2,15 +2,16 @@ import React, {FC, MouseEvent, TouchEvent, useState} from 'react'
 import { Link } from "react-router-dom";
 // MUI
 import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid'
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-
 import Login from './loggin';
 import Logo from './logo';
 import MenuList from './menuList';
+import MobilMenuList from './mobilMenuList';
 
 
 const TopBar: FC = () => {
@@ -19,22 +20,23 @@ const TopBar: FC = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters variant="dense">
-                    <Grid container>
-                        {/* logo */}
-                        <Grid item sm={2}>
-                            <Logo />
-                        </Grid>
+                    {/* mobile */}
+                    <Box 
+                        sx={{display: {xs: 'flex', md: 'none'}, width: '100%'}}
+                    >
+                        <MobilMenuList fg={1}/>{/* flexgrow 1 */}
+                        <Logo fg={1}/>{/* flexgrow 1 */}
+                        <Login fg={0}/>{/* flexgrow 0 */}
+                    </Box>
+                    {/* PC */}
+                    <Box 
+                        sx={{display: {xs: 'none', md: 'flex'}, width: '100%'}}
+                    >
+                        <Logo fg={1}/>{/* flexgrow 1 */}
+                        <MenuList fg={3}/>{/* flexgrow 3 */}
+                        <Login fg={0}/>{/* flexgrow 0 */}
+                    </Box>
 
-                        {/* menu */}
-                        <Grid item sm={8}>
-                            <MenuList />
-                        </Grid>
-
-                        {/* login / profile */}
-                        <Grid item sm={2}>
-                            <Login />
-                        </Grid>
-                    </Grid>                    
                 </Toolbar>
             </Container>
         </AppBar>

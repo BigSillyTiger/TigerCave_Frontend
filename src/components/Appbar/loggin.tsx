@@ -24,13 +24,17 @@ const PaperComponent: FC = (props: any) => {
     )
 }
 
-const Login: FC = () => {
+type props = {
+    fg: number
+}
+
+const Login: FC<props> = ({fg}) => {
     const [open, setOpen] = useState<boolean>(false)
     const handleOpen = (event: MouseEvent<HTMLButtonElement> | TouchEvent<HTMLButtonElement>) =>{setOpen(true)}
     const handleClose = () => setOpen(false)
 
     return (
-        <Box sx={{flexGrow: 0}}>
+        <Box sx={{flexGrow: fg}}>
             <Tooltip title='Loggin'>
                 <IconButton onClick={handleOpen} sx={{p: '0 auto'}}>
                     <Avatar alt='login button' >L</Avatar>

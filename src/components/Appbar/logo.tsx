@@ -4,13 +4,17 @@ import { Link } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 import {homePage} from '../../config/pageConfig';
 
-const Logo: FC = () => {
+type props = {
+  fg: number
+}
+
+const Logo: FC<props> = ({fg}) => {
   return (
     <Typography
         variant='h6'
         noWrap
         component="div"
-        sx={{mr: 2, display:{xs: 'none', md: 'flex'}}}
+        sx={{flexGrow: fg, display:{xs: 'flex'}}}
     >
         <Link to={homePage.path}>
             Tiger's Cave 1
