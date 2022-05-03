@@ -9,6 +9,12 @@ export type mainCfgType = {
     'content': JSX.Element
 }
 
+export const homePage: mainCfgType = {
+    title: 'Home',
+    path: '/',
+    content: <div>Home page</div>
+}
+
 export const  mainMenuCfg: mainCfgType[]  = [
     {
         title: 'Blogs',
@@ -23,4 +29,10 @@ export const  mainMenuCfg: mainCfgType[]  = [
         path: '/backpage',
         content: <BackPage />
     }
+]
+
+export const profileMenu = [
+    'Dashboard', 
+    'Account',
+    'Logout'
 ]
