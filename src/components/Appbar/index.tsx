@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid'
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-import Login from './loggin';
+import LogProMenu from './interMenu';
 import Logo from './logo';
 import MenuList from './menuList';
 import MobilMenuList from './mobilMenuList';
@@ -26,7 +26,7 @@ const TopBar: FC = () => {
                     >
                         <MobilMenuList fg={1}/>{/* flexgrow 1 */}
                         <Logo fg={1}/>{/* flexgrow 1 */}
-                        <Login fg={0}/>{/* flexgrow 0 */}
+                        <LogProMenu fg={0}/>{/* flexgrow 0 */}
                     </Box>
                     {/* PC */}
                     <Box 
@@ -34,7 +34,7 @@ const TopBar: FC = () => {
                     >
                         <Logo fg={1}/>{/* flexgrow 1 */}
                         <MenuList fg={3}/>{/* flexgrow 3 */}
-                        <Login fg={0}/>{/* flexgrow 0 */}
+                        <LogProMenu fg={0}/>{/* flexgrow 0 */}
                     </Box>
 
                 </Toolbar>

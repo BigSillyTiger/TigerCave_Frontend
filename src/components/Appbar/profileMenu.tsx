@@ -10,7 +10,11 @@ import Typography from '@mui/material/Typography';
 
 import {profileMenu} from '../../config/pageConfig';
 
-const ProfileMenu: FC = () => {
+type propsType = {
+    fg: number
+}
+
+const ProfileMenu: FC<propsType> = ({fg}) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLInputElement>(null)
     const handleOpen = (event: MouseEvent<HTMLButtonElement> | TouchEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget as HTMLInputElement)}
     const handleClose = () => {setAnchorEl(null)}
