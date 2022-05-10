@@ -7,9 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -23,6 +21,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import {api_login} from '../../api/post'
+import {api_checkLogin} from '../../api/get'
 
 const PaperComponent: FC = (props: any) => {
     return (
@@ -64,9 +63,12 @@ const Login: FC<propsType> = ({fg, userLogin}) => {
         event.preventDefault()
         api_login(loginValues.account, loginValues.password)
             .then(response => {
-                console.log('-> page recv: ', response)
-                userLogin()
-            })
+                    if(response) {
+                        userLogin()
+                        //api_checkLogin()
+                    }
+                }
+            )
             .catch(err => {
                 console.log('-> page err: ', err);
             })

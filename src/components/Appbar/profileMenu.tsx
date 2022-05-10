@@ -1,4 +1,6 @@
 import React, {FC, MouseEvent, TouchEvent,useState} from 'react'
+import { connect } from 'react-redux';
+import { userLogout } from '../../redux_store/features/login/loginSlice';
 // MUI
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -9,15 +11,21 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import {profileMenu} from '../../config/pageConfig';
+import {api_adminLogout} from '../../api/get'
 
 type propsType = {
-    fg: number
+    fg: number,
+    userLogout: any
 }
 
-const ProfileMenu: FC<propsType> = ({fg}) => {
+const ProfileMenu: FC<propsType> = ({fg, userLogout}) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLInputElement>(null)
     const handleOpen = (event: MouseEvent<HTMLButtonElement> | TouchEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget as HTMLInputElement)}
-    const handleClose = () => {setAnchorEl(null)}
+    const handleClose = () => {
+        userLogout()
+        api_adminLogout()
+        setAnchorEl(null)
+    }
 
     return (
         <Box sx={{flexGrow: 0}}>
@@ -52,4 +60,4 @@ const ProfileMenu: FC<propsType> = ({fg}) => {
     )
 }
 
-export default ProfileMenu
+export default connect(null, {userLogout})(ProfileMenu)
