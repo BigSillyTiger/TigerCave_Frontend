@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
+
+import Container from "@mui/material/Container";
 
 function BackPage() {
-  return (
-    <div>back page</div>
-  )
+    return <Container sx={{ padding: "1rem" }}>back page</Container>;
 }
 
-export default BackPage
+export default BackPage;

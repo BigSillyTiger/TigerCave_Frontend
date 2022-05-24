@@ -1,39 +1,38 @@
-import React, {FC, useEffect} from 'react'
-import {connect} from 'react-redux'
-import {selectLogin, userLogin} from '../../redux_store/features/login/loginSlice'
-import {api_checkLogin} from '../../api/get'
+import React, { FC, useEffect } from "react";
+import { connect } from "react-redux";
+import {
+    selectLogin,
+    userLogin,
+} from "../../redux_store/features/login/loginSlice";
+import { API_G } from "../../api";
 
-import Login from './loggin'
-import ProfileMenu from './profileMenu'
-
-const testFlag = true
+import Login from "./loggin";
+import ProfileMenu from "./profileMenu";
 
 type propsType = {
-    fg: number
-    loginStatus: any,
-    userLogin: any
-}
+    fg: number;
+    loginStatus: any;
+    userLogin: any;
+};
 
-const LogProMenu: FC<propsType> = ({fg, loginStatus, userLogin}) => {
+const LogProMenu: FC<propsType> = ({ fg, loginStatus, userLogin }) => {
     useEffect(() => {
-        api_checkLogin()
+        API_G.checkLogin()
             .then((result) => {
-                console.log('=> api_checkLogin test: ', result)
-                if(result) userLogin()
+                console.log("=> api_checkLogin test: ", result);
+                if (result) userLogin();
             })
-            .catch(err => {
-                console.log('err: ', err)
-            })
-    })
+            .catch((err) => {
+                console.log("err: ", err);
+            });
+    });
 
-    return (
-        loginStatus ? <ProfileMenu fg={fg}/> : <Login fg={fg}/>
-    )
-}
+    return loginStatus ? <ProfileMenu fg={fg} /> : <Login fg={fg} />;
+};
 
 const mapStateToProps = (state: any) => {
-    const loginStatus = selectLogin(state)
-    return {loginStatus}
-}
+    const loginStatus = selectLogin(state);
+    return { loginStatus };
+};
 
-export default connect(mapStateToProps, {userLogin})(LogProMenu)
+export default connect(mapStateToProps, { userLogin })(LogProMenu);

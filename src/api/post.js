@@ -1,30 +1,35 @@
-import axios from 'axios'
+import apis from "./axios";
+import { REQ_LOGIN, REQ_NEW_POST } from "./req_list";
 
-const apis = axios.create({
-    withCredentials: true,
-    baseURL: 'http://localhost:8000'
-})
-
-const api_login = async (username, password) => {
+export const login = async (username, password) => {
     const newPost = {
         username,
         password,
-    }
+    };
     try {
-        const response = await apis.post('/adminlogin', newPost)
-        console.log('-> fe recv login res: ', response.data)
-        return response.data.success
+        const response = await apis.post(REQ_LOGIN, newPost);
+        console.log("-> fe recv login res: ", response.data);
+        return response.data.success;
     } catch (err) {
-        if(err.response) {
-            console.error('err.response: ', err.response.data.success)
+        if (err.response) {
+            console.error("err.response: ", err.response.data.success);
         } else {
-            console.error(`error msg: ${err}`)
+            console.error(`error msg: ${err}`);
         }
-        return false
+        return false;
     }
-}
+};
 
-
-export {
-    api_login
-}
+export const newPost = async (data) => {
+    try {
+        const response = await apis.post(REQ_NEW_POST, { data });
+        return response.data.success;
+    } catch (err) {
+        if (err.response) {
+            console.error("err.response: ", err.response.data.success);
+        } else {
+            console.error(`error msg: ${err}`);
+        }
+        return false;
+    }
+};

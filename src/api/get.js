@@ -1,39 +1,43 @@
-import axios from 'axios'
+import apis from "./axios";
+import { REQ_LOGIN_STATUS, REQ_LOGOUT, REQ_BLOG_POSTS } from "./req_list";
 
-const apis = axios.create({
-    withCredentials: true,
-    baseURL: 'http://localhost:8000'
-})
-
-const api_checkLogin = async () => {
+export const checkLogin = async () => {
     try {
-        const response = await apis.get('/checkAuth')
-        return response.data.success
+        const response = await apis.get(REQ_LOGIN_STATUS);
+        return response.data.success;
     } catch (err) {
-        if(err.response) {
-            console.log('=> err.response: ', err.response)
+        if (err.response) {
+            console.log("=> err.response: ", err.response);
         } else {
-            console.log(`error msg: ${err}`)
+            console.log(`error msg: ${err}`);
         }
     }
-}
+};
 
-const api_adminLogout = async () => {
+export const adminLogout = async () => {
     try {
-        const response = await apis.get('/adminLogout')
-        return response.data.note
+        const response = await apis.get(REQ_LOGOUT);
+        return response.data.note;
     } catch (err) {
-        if(err.response) {
-            console.log('=> logout err.response: ', err.response)
+        if (err.response) {
+            console.log("=> logout err.response: ", err.response);
         } else {
-            console.log(`error msg: ${err}`)
+            console.log(`error msg: ${err}`);
         }
-        return false
+        return false;
     }
-}
+};
 
-
-export {
-    api_checkLogin,
-    api_adminLogout
-}
+export const getBlogPosts = async () => {
+    try {
+        const response = await apis.get(REQ_BLOG_POSTS);
+        return response.data;
+    } catch (err) {
+        if (err.response) {
+            console.log("=> logout err.response: ", err.response);
+        } else {
+            console.log(`error msg: ${err}`);
+        }
+        return false;
+    }
+};
