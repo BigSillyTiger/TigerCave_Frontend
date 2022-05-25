@@ -4,7 +4,7 @@ import {
     selectLogin,
     userLogin,
 } from "../../redux_store/features/login/loginSlice";
-import { API_G } from "../../api";
+import { API_LOGIN } from "../../api";
 
 import Login from "./loggin";
 import ProfileMenu from "./profileMenu";
@@ -17,9 +17,8 @@ type propsType = {
 
 const LogProMenu: FC<propsType> = ({ fg, loginStatus, userLogin }) => {
     useEffect(() => {
-        API_G.checkLogin()
+        API_LOGIN.checkLogin()
             .then((result) => {
-                console.log("=> api_checkLogin test: ", result);
                 if (result) userLogin();
             })
             .catch((err) => {

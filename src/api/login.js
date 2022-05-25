@@ -1,5 +1,5 @@
 import apis from "./axios";
-import { REQ_LOGIN_STATUS, REQ_LOGOUT, REQ_BLOG_POSTS } from "./req_list";
+import { REQ_LOGIN_STATUS, REQ_LOGIN, REQ_LOGOUT } from "./req_list";
 
 export const checkLogin = async () => {
     try {
@@ -28,15 +28,20 @@ export const adminLogout = async () => {
     }
 };
 
-export const getBlogPosts = async () => {
+export const login = async (username, password) => {
+    const newPost = {
+        username,
+        password,
+    };
     try {
-        const response = await apis.get(REQ_BLOG_POSTS);
-        return response.data;
+        const response = await apis.post(REQ_LOGIN, newPost);
+        console.log("-> fe recv login res: ", response.data);
+        return response.data.success;
     } catch (err) {
         if (err.response) {
-            console.log("=> logout err.response: ", err.response);
+            console.error("err.response: ", err.response.data.success);
         } else {
-            console.log(`error msg: ${err}`);
+            console.error(`error msg: ${err}`);
         }
         return false;
     }

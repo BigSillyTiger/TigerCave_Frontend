@@ -4,6 +4,7 @@ import React, {
     TouchEvent,
     ChangeEvent,
     useState,
+    useEffect,
 } from "react";
 import { connect } from "react-redux";
 // MUI
@@ -16,19 +17,37 @@ import NoteAltOutlinedIcon from "@mui/icons-material/NoteAltOutlined";
 import BlogMenu from "./blogMenu";
 import BlogContent from "./blogContent";
 import { selectLogin } from "../../redux_store/features/login/loginSlice";
+import {
+    selectRoar,
+    raorUpdate,
+} from "../../redux_store/features/roar/roarSlice";
 import NewPostModal from "./newPostModal";
 import NewPostBtn from "./newPostBtn";
+import { API_ROAR } from "../../api";
 //
 
 type propsType = {
     loginStatus: any;
+    sPosts: any;
+    raorUpdate: any;
 };
 
-const Blog: FC<propsType> = ({ loginStatus }) => {
+const Blog: FC<propsType> = ({ loginStatus, sPosts, raorUpdate }) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const handleModalOpen = (value: boolean) => {
         setModalOpen(value);
     };
+
+    useEffect(() => {
+        API_ROAR.getBlogPosts()
+            .then((result) => {
+                const roarPosts = JSON.parse(result.content);
+                raorUpdate(roarPosts);
+            })
+            .catch((err) => {
+                console.log("err: ", err);
+            });
+    }, []);
 
     return (
         <>
@@ -39,9 +58,7 @@ const Blog: FC<propsType> = ({ loginStatus }) => {
                         <BlogMenu />
                     </Grid>
                     <Grid item container sm={9} spacing={2}>
-                        <Grid item sm={12}>
-                            <BlogContent data={{}} />
-                        </Grid>
+                        <BlogContent />
                     </Grid>
                 </Grid>
             </Container>
@@ -62,7 +79,8 @@ const Blog: FC<propsType> = ({ loginStatus }) => {
 
 const mapStateToProps = (state: any) => {
     const loginStatus = selectLogin(state);
-    return { loginStatus };
+    const sPosts = selectRoar(state);
+    return { loginStatus, sPosts };
 };
 
-export default connect(mapStateToProps)(Blog);
+export default connect(mapStateToProps, { raorUpdate })(Blog);

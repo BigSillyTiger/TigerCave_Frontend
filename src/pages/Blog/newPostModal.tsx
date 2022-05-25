@@ -10,7 +10,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
-import { API_P } from "../../api";
+import { API_ROAR } from "../../api";
 
 type propsType = {
     open: boolean;
@@ -26,7 +26,7 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
 const NewPostModal: FC<propsType> = ({ open, onClose }) => {
     const [content, setContent] = useState("");
     const handlePostClick = () => {
-        API_P.newPost(content)
+        API_ROAR.newRoar(content)
             .then((res) => {
                 console.log("--> ui rece: ", res);
             })

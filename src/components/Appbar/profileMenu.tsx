@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
 import { profileMenu } from "../../config/pageConfig";
-import { API_G } from "../../api";
+import { API_LOGIN } from "../../api";
 
 type propsType = {
     fg: number;
@@ -27,7 +27,7 @@ const ProfileMenu: FC<propsType> = ({ fg, userLogout }) => {
     };
 
     const handleClose = () => {
-        API_G.adminLogout();
+        API_LOGIN.adminLogout();
         setAnchorEl(null);
     };
 

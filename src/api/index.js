@@ -1,5 +1,5 @@
 import { GestureTwoTone } from "@mui/icons-material";
-import * as API_G from "./get";
-import * as API_P from "./post";
+import * as API_LOGIN from "./login";
+import * as API_ROAR from "./roars";
 
-export { API_G, API_P };
+export { API_LOGIN, API_ROAR };

@@ -26,7 +26,7 @@ import { OutlinedInput } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import { API_P } from "../../api";
+import { API_LOGIN } from "../../api";
 
 const PaperComponent: FC = (props: any) => {
     return (
@@ -79,7 +79,7 @@ const Login: FC<propsType> = ({ fg, userLogin }) => {
 
     const handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        API_P.login(loginValues.account, loginValues.password)
+        API_LOGIN.login(loginValues.account, loginValues.password)
             .then((response) => {
                 if (response) {
                     userLogin();

@@ -33,7 +33,7 @@ const NewPostBtn: FC<propsType> = ({ handleModal }) => {
                 color="success"
                 size="large"
                 sx={{
-                    position: "absolute",
+                    position: "fixed",
                     bottom: "2rem",
                     right: "2rem",
                 }}
