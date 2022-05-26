@@ -17,7 +17,7 @@ import { API_ROAR } from "../../api";
 import { selectRoar } from "../../redux_store/features/roar/roarSlice";
 
 type propsType = {
-    roarPosts: any;
+    roars: any;
 };
 
 const A_DAY_TIME = 24 * 60 * 60 * 1000;
@@ -38,8 +38,10 @@ const dateFormat = (value: string) => {
     return result.toLocaleDateString("en-US");
 };
 
-const BlogContent: FC<propsType> = ({ roarPosts }) => {
-    if (!roarPosts.length) {
+const BlogContent: FC<propsType> = ({ roars }) => {
+    useEffect(() => {}, [roars]);
+
+    if (!roars.length) {
         return (
             <Grid item xs={12}>
                 <Card>
@@ -64,7 +66,7 @@ const BlogContent: FC<propsType> = ({ roarPosts }) => {
     };
 
     //const content = data.map((item: any) => {});
-    const content = roarPosts.map((item: any) => {
+    const content = roars.map((item: any) => {
         return (
             <Grid item xs={12} key={item._id}>
                 <Card key={item._id}>
@@ -92,8 +94,8 @@ const BlogContent: FC<propsType> = ({ roarPosts }) => {
 };
 
 const mapStateToProps = (state: any) => {
-    const roarPosts = selectRoar(state);
-    return { roarPosts };
+    const roars = selectRoar(state);
+    return { roars };
 };
 
 export default connect(mapStateToProps)(BlogContent);

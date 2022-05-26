@@ -28,18 +28,19 @@ import { API_ROAR } from "../../api";
 
 type propsType = {
     loginStatus: any;
-    sPosts: any;
+    roars: any;
     raorUpdate: any;
 };
 
-const Blog: FC<propsType> = ({ loginStatus, sPosts, raorUpdate }) => {
+const Blog: FC<propsType> = ({ loginStatus, roars, raorUpdate }) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const handleModalOpen = (value: boolean) => {
         setModalOpen(value);
     };
 
     useEffect(() => {
-        API_ROAR.getBlogPosts()
+        console.log("=> content display init");
+        API_ROAR.getRoars()
             .then((result) => {
                 const roarPosts = JSON.parse(result.content);
                 raorUpdate(roarPosts);
@@ -79,8 +80,8 @@ const Blog: FC<propsType> = ({ loginStatus, sPosts, raorUpdate }) => {
 
 const mapStateToProps = (state: any) => {
     const loginStatus = selectLogin(state);
-    const sPosts = selectRoar(state);
-    return { loginStatus, sPosts };
+    const roars = selectRoar(state);
+    return { loginStatus, roars };
 };
 
 export default connect(mapStateToProps, { raorUpdate })(Blog);

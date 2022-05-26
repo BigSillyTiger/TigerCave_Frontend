@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
 
 interface RoarPostState {
-    roarState: [];
+    roarState: Array<any>;
 }
 
 const initialState: RoarPostState = { roarState: [] };
@@ -12,7 +12,8 @@ export const roarSlice = createSlice({
     initialState,
     reducers: {
         raorUpdate: (state, action: PayloadAction<Array<any>>) => {
-            state.roarState = action.payload as [];
+            //state.roarState = action.payload as [];
+            state.roarState = [...action.payload];
         },
     },
 });

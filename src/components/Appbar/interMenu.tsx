@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
     selectLogin,
     userLogin,
+    userLogout,
 } from "../../redux_store/features/login/loginSlice";
 import { API_LOGIN } from "../../api";
 
@@ -13,9 +14,15 @@ type propsType = {
     fg: number;
     loginStatus: any;
     userLogin: any;
+    userLogout: any;
 };
 
-const LogProMenu: FC<propsType> = ({ fg, loginStatus, userLogin }) => {
+const LogProMenu: FC<propsType> = ({
+    fg,
+    loginStatus,
+    userLogin,
+    userLogout,
+}) => {
     useEffect(() => {
         API_LOGIN.checkLogin()
             .then((result) => {
@@ -23,6 +30,7 @@ const LogProMenu: FC<propsType> = ({ fg, loginStatus, userLogin }) => {
             })
             .catch((err) => {
                 console.log("err: ", err);
+                userLogout();
             });
     });
 
@@ -34,4 +42,4 @@ const mapStateToProps = (state: any) => {
     return { loginStatus };
 };
 
-export default connect(mapStateToProps, { userLogin })(LogProMenu);
+export default connect(mapStateToProps, { userLogin, userLogout })(LogProMenu);

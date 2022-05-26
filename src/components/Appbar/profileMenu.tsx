@@ -27,11 +27,11 @@ const ProfileMenu: FC<propsType> = ({ fg, userLogout }) => {
     };
 
     const handleClose = () => {
-        API_LOGIN.adminLogout();
         setAnchorEl(null);
     };
 
     const handleLogOut = () => {
+        API_LOGIN.adminLogout();
         userLogout();
     };
 
@@ -59,7 +59,7 @@ const ProfileMenu: FC<propsType> = ({ fg, userLogout }) => {
                 onClose={handleClose}
             >
                 {profileMenu.map((item) => (
-                    <MenuItem key={item} onClick={handleClose}>
+                    <MenuItem key={item} onClick={handleLogOut}>
                         <Typography textAlign="center">{item}</Typography>
                     </MenuItem>
                 ))}

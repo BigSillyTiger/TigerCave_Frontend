@@ -1,10 +1,10 @@
 import apis from "./axios";
-import { REQ_ROAR_POSTS } from "./req_list";
+import { REQ_ROAR, REQ_ROAR_ADMIN } from "./req_list";
 
 // POST
 export const newRoar = async (data) => {
     try {
-        const response = await apis.post(REQ_ROAR_POSTS, { data });
+        const response = await apis.post(REQ_ROAR, { data });
         return response.data;
     } catch (err) {
         if (err.response) {
@@ -17,14 +17,29 @@ export const newRoar = async (data) => {
 };
 
 // GET
-export const getBlogPosts = async () => {
+export const getRoars = async () => {
     try {
-        const response = await apis.get(REQ_ROAR_POSTS);
+        const response = await apis.get(REQ_ROAR);
         //console.log("-> front recv all post: ", response.data);
         return response.data;
     } catch (err) {
         if (err.response) {
-            console.log("=> getBlogPosts err.response: ", err.response);
+            console.log("=> getRoars err.response: ", err.response);
+        } else {
+            console.log(`error msg: ${err}`);
+        }
+        return false;
+    }
+};
+
+export const getArchivedRoars = async () => {
+    try {
+        const response = await apis.get(REQ_ROAR_ADMIN);
+        //console.log("-> front recv all post: ", response.data);
+        return response.data;
+    } catch (err) {
+        if (err.response) {
+            console.log("=> getArchivedRoar err.response: ", err.response);
         } else {
             console.log(`error msg: ${err}`);
         }
@@ -36,7 +51,7 @@ export const getBlogPosts = async () => {
 export const deleteRoar = async (deleteID) => {
     console.log("api recv deleteID: ", deleteID);
     try {
-        const response = await apis.delete(`${REQ_ROAR_POSTS}/${deleteID}`);
+        const response = await apis.delete(`${REQ_ROAR}/${deleteID}`);
         console.log("---< delete roar: ", response.data);
         return response.data;
     } catch (err) {
@@ -53,7 +68,7 @@ export const deleteRoar = async (deleteID) => {
 export const archiveRoar = async (hideID) => {
     console.log("=<< api recv hideID: ", hideID);
     try {
-        const response = await apis.put(REQ_ROAR_POSTS, { data: hideID });
+        const response = await apis.put(REQ_ROAR, { data: hideID });
         console.log("---< delete roar: ", response.data);
         return response.data;
     } catch (err) {
