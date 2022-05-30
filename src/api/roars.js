@@ -16,30 +16,37 @@ export const newRoar = async (data) => {
     }
 };
 
-// GET
-export const getRoars = async () => {
+/* 
+    Type: "all" | "pics" | "words" | "articles" | "archive";
+ */
+export const getRoars = async (type) => {
+    let req_path = REQ_ROAR;
+    switch (type) {
+        case "all":
+            req_path = REQ_ROAR;
+            break;
+        case "pics":
+            req_path = REQ_ROAR;
+            break;
+        case "words":
+            req_path = REQ_ROAR;
+            break;
+        case "articles":
+            req_path = REQ_ROAR;
+            break;
+        case "archive":
+            req_path = REQ_ROAR_ADMIN;
+            break;
+        default:
+            req_path = REQ_ROAR;
+    }
     try {
-        const response = await apis.get(REQ_ROAR);
+        const response = await apis.get(req_path);
         //console.log("-> front recv all post: ", response.data);
         return response.data;
     } catch (err) {
         if (err.response) {
             console.log("=> getRoars err.response: ", err.response);
-        } else {
-            console.log(`error msg: ${err}`);
-        }
-        return false;
-    }
-};
-
-export const getArchivedRoars = async () => {
-    try {
-        const response = await apis.get(REQ_ROAR_ADMIN);
-        //console.log("-> front recv all post: ", response.data);
-        return response.data;
-    } catch (err) {
-        if (err.response) {
-            console.log("=> getArchivedRoar err.response: ", err.response);
         } else {
             console.log(`error msg: ${err}`);
         }
@@ -65,10 +72,15 @@ export const deleteRoar = async (deleteID) => {
     }
 };
 
-export const archiveRoar = async (hideID) => {
-    console.log("=<< api recv hideID: ", hideID);
+// Archive a roar
+export const archiveRoar = async (archiveID, archiveFlag) => {
+    console.log("=<< api recv hideID: ", archiveID);
+    const data = {
+        archiveID,
+        archiveFlag,
+    };
     try {
-        const response = await apis.put(REQ_ROAR, { data: hideID });
+        const response = await apis.put(REQ_ROAR, { data });
         console.log("---< delete roar: ", response.data);
         return response.data;
     } catch (err) {

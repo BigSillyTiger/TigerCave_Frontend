@@ -18,37 +18,56 @@ import BlogMenu from "./blogMenu";
 import BlogContent from "./blogContent";
 import { selectLogin } from "../../redux_store/features/login/loginSlice";
 import {
-    selectRoar,
-    raorUpdate,
+    selectRoarMenu,
+    roarUpdate,
+    currentMenuUpdate,
 } from "../../redux_store/features/roar/roarSlice";
 import NewPostModal from "./newPostModal";
 import NewPostBtn from "./newPostBtn";
 import { API_ROAR } from "../../api";
 //
+import { roar_menu_items } from "../../config/pageConfig";
 
 type propsType = {
-    loginStatus: any;
-    roars: any;
-    raorUpdate: any;
+    loginStatus: boolean;
+    currentMenu: roar_menu_items;
+    roarUpdate: any;
+    currentMenuUpdate: any;
 };
 
-const Blog: FC<propsType> = ({ loginStatus, roars, raorUpdate }) => {
+const Blog: FC<propsType> = ({
+    loginStatus,
+    currentMenu,
+    roarUpdate,
+    currentMenuUpdate,
+}) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const handleModalOpen = (value: boolean) => {
         setModalOpen(value);
     };
 
     useEffect(() => {
-        console.log("=> content display init");
-        API_ROAR.getRoars()
-            .then((result) => {
-                const roarPosts = JSON.parse(result.content);
-                raorUpdate(roarPosts);
-            })
-            .catch((err) => {
-                console.log("err: ", err);
-            });
-    }, []);
+        if (currentMenu === "all") {
+            API_ROAR.getRoars("all")
+                .then((result) => {
+                    const roarPosts = JSON.parse(result.content);
+                    roarUpdate(roarPosts);
+                })
+                .catch((err) => {
+                    console.log("err: ", err);
+                });
+        } else if (currentMenu === "archive") {
+            API_ROAR.getRoars("archive")
+                .then((result: any) => {
+                    const archivedPosts = JSON.parse(result.content);
+                    //console.log("=> archive click data: ", archivedPosts);
+                    roarUpdate(archivedPosts);
+                })
+                .catch((err: any) => {
+                    console.log("err: ", err);
+                });
+        }
+    }, [currentMenu]);
 
     return (
         <>
@@ -80,8 +99,10 @@ const Blog: FC<propsType> = ({ loginStatus, roars, raorUpdate }) => {
 
 const mapStateToProps = (state: any) => {
     const loginStatus = selectLogin(state);
-    const roars = selectRoar(state);
-    return { loginStatus, roars };
+    const currentMenu = selectRoarMenu(state);
+    return { loginStatus, currentMenu };
 };
 
-export default connect(mapStateToProps, { raorUpdate })(Blog);
+export default connect(mapStateToProps, { roarUpdate, currentMenuUpdate })(
+    Blog
+);

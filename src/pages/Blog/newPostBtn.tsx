@@ -23,6 +23,7 @@ const NewPostBtn: FC<propsType> = ({ handleModal }) => {
         setPostAnchEl(null);
     };
     const handlePostClick = () => {
+        setPostAnchEl(null);
         handleModal(true);
     };
 
@@ -35,7 +36,7 @@ const NewPostBtn: FC<propsType> = ({ handleModal }) => {
                 sx={{
                     position: "fixed",
                     bottom: "2rem",
-                    right: "2rem",
+                    right: "4rem",
                 }}
                 onClick={handleMenuClick}
             >

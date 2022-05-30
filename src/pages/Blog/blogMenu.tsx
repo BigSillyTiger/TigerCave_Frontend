@@ -20,46 +20,41 @@ import StarBorder from "@mui/icons-material/StarBorder";
 import MailLockIcon from "@mui/icons-material/MailLock";
 
 import { selectLogin } from "../../redux_store/features/login/loginSlice";
-import { raorUpdate } from "../../redux_store/features/roar/roarSlice";
-import { API_ROAR } from "../../api";
+import {
+    roarUpdate,
+    selectRoarMenu,
+    currentMenuUpdate,
+} from "../../redux_store/features/roar/roarSlice";
+import { roar_menu_items } from "../../config/pageConfig";
 
 const Menu_Classes = ["aLl", "Pics", "Words", "Articles"];
 const AdminMenu_Classes = ["Archive"];
 
 type propsType = {
-    loginStatus: any;
-    raorUpdate: any;
+    loginStatus: boolean;
+    currentMenu: roar_menu_items;
+    roarUpdate: any;
+    currentMenuUpdate: any;
 };
 
-const BlogMenu: FC<propsType> = ({ loginStatus, raorUpdate }) => {
+const BlogMenu: FC<propsType> = ({
+    loginStatus,
+    currentMenu,
+    roarUpdate,
+    currentMenuUpdate,
+}) => {
     const [selectedM, setSelectedM] = useState<number>(0);
 
     const handleSelectedM = (v: number) => {
         setSelectedM(v);
         if (v === 0) {
-            API_ROAR.getRoars()
-                .then((result) => {
-                    const roarPosts = JSON.parse(result.content);
-                    console.log("=> all click data: ", roarPosts);
-                    raorUpdate(roarPosts);
-                })
-                .catch((err) => {
-                    console.log("err: ", err);
-                });
+            currentMenuUpdate("all");
         }
     };
 
     const handleArchivedClick = (v: number) => {
         handleSelectedM(v);
-        API_ROAR.getArchivedRoars()
-            .then((result: any) => {
-                const archivedPosts = JSON.parse(result.content);
-                console.log("=> archive click data: ", archivedPosts);
-                raorUpdate(archivedPosts);
-            })
-            .catch((err: any) => {
-                console.log("err: ", err);
-            });
+        currentMenuUpdate("archive");
     };
 
     const normal_menu = Menu_Classes.map((item: any, index: number) => {
@@ -68,6 +63,7 @@ const BlogMenu: FC<propsType> = ({ loginStatus, raorUpdate }) => {
                 key={item}
                 selected={selectedM === index}
                 onClick={(event) => {
+                    event.preventDefault();
                     handleSelectedM(index);
                 }}
             >
@@ -130,9 +126,13 @@ const BlogMenu: FC<propsType> = ({ loginStatus, raorUpdate }) => {
         </Paper>
     );
 };
+
 const mapStateToProps = (state: any) => {
     const loginStatus = selectLogin(state);
-    return { loginStatus };
+    const currentMenu = selectRoarMenu(state);
+    return { loginStatus, currentMenu };
 };
 
-export default connect(mapStateToProps, { raorUpdate })(BlogMenu);
+export default connect(mapStateToProps, { roarUpdate, currentMenuUpdate })(
+    BlogMenu
+);

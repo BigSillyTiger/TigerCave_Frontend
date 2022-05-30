@@ -14,31 +14,18 @@ import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import { API_ROAR } from "../../api";
-import { selectRoar } from "../../redux_store/features/roar/roarSlice";
+import {
+    selectRoar,
+    roarUpdate,
+} from "../../redux_store/features/roar/roarSlice";
+import { dateFormat } from "../../config/utils";
 
 type propsType = {
     roars: any;
+    roarUpdate: any;
 };
 
-const A_DAY_TIME = 24 * 60 * 60 * 1000;
-const A_HOUR_TIME = 60 * 60 * 1000;
-const A_MIN_TIME = 60 * 1000;
-
-const dateFormat = (value: string) => {
-    const result = new Date(value);
-    const currentTime = new Date();
-    const partTime = currentTime.getTime() - result.getTime();
-    if (A_HOUR_TIME <= partTime && A_DAY_TIME > partTime) {
-        return `${Math.floor(partTime / (1000 * 60 * 60))} hours ago`;
-    } else if (A_HOUR_TIME > partTime && A_MIN_TIME <= partTime) {
-        return `${Math.floor(partTime / (1000 * 60))} mins ago`;
-    } else if (A_MIN_TIME > partTime) {
-        return `${Math.floor(partTime / 1000)} seconds ago`;
-    }
-    return result.toLocaleDateString("en-US");
-};
-
-const BlogContent: FC<propsType> = ({ roars }) => {
+const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
     useEffect(() => {}, [roars]);
 
     if (!roars.length) {
@@ -53,12 +40,11 @@ const BlogContent: FC<propsType> = ({ roars }) => {
         );
     }
 
-    const deleteRoar = (id: string | number) => {
+    const archiveRoar = (id: string | number) => {
         console.log("=> clicked delete btn");
-        //API_ROAR.deleteRoar(id)
-        API_ROAR.archiveRoar(id)
+        API_ROAR.archiveRoar(id, true)
             .then((res) => {
-                console.log("delete/hide raor succeed: ", res);
+                console.log("delete/hide roar succeed: ", res);
             })
             .catch((err) => {
                 console.log("delete/hide roar err: ", err);
@@ -77,7 +63,7 @@ const BlogContent: FC<propsType> = ({ roars }) => {
                         action={
                             <IconButton
                                 aria-label="settings"
-                                onClick={() => deleteRoar(item._id)}
+                                onClick={() => archiveRoar(item._id)}
                             >
                                 <MoreVertIcon />
                             </IconButton>
@@ -98,4 +84,4 @@ const mapStateToProps = (state: any) => {
     return { roars };
 };
 
-export default connect(mapStateToProps)(BlogContent);
+export default connect(mapStateToProps, { roarUpdate })(BlogContent);
