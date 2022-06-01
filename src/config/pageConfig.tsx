@@ -1,5 +1,6 @@
 import HomePage from "../pages/HomePage";
 import BackPage from "../pages/BackPage";
+import Games from "../pages/GamePage";
 import Blog from "../pages/Blog";
 import Picture from "../pages/Picture";
 
@@ -27,9 +28,9 @@ export const mainMenuCfg: mainCfgType[] = [
         content: <Picture />,
     },
     {
-        title: "Back Page",
-        path: "/backpage",
-        content: <BackPage />,
+        title: "Games",
+        path: "/games",
+        content: <Games />,
     },
 ];
 

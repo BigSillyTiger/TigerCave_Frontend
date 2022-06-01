@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { connect } from "react-redux";
 //
 import Avatar from "@mui/material/Avatar";
@@ -10,6 +10,8 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 //
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
@@ -26,6 +28,7 @@ type propsType = {
 };
 
 const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
+    const [headMenuEl, setHeadMenuEl] = useState(null);
     useEffect(() => {}, [roars]);
 
     if (!roars.length) {
@@ -53,6 +56,9 @@ const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
 
     //const content = data.map((item: any) => {});
     const content = roars.map((item: any) => {
+        const openHM = Boolean(headMenuEl);
+        const handleHeadMenuClose = () => {};
+
         return (
             <Grid item xs={12} key={item._id}>
                 <Card key={item._id}>
@@ -61,12 +67,30 @@ const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
                         title={"test title"}
                         subheader={dateFormat(item.date)}
                         action={
-                            <IconButton
-                                aria-label="settings"
-                                onClick={() => archiveRoar(item._id)}
-                            >
-                                <MoreVertIcon />
-                            </IconButton>
+                            <>
+                                <IconButton
+                                    aria-label="settings"
+                                    onClick={() => archiveRoar(item._id)}
+                                >
+                                    <MoreVertIcon />
+                                </IconButton>
+                                <Menu
+                                    id="head-menu"
+                                    anchorEl={headMenuEl}
+                                    open={openHM}
+                                    onClose={handleHeadMenuClose}
+                                    MenuListProps={{
+                                        "aria-labelledby": "new-post-button",
+                                    }}
+                                >
+                                    <MenuItem onClick={handleHeadMenuClose}>
+                                        Archive
+                                    </MenuItem>
+                                    <MenuItem onClick={handleHeadMenuClose}>
+                                        Archive
+                                    </MenuItem>
+                                </Menu>
+                            </>
                         }
                     ></CardHeader>
                     <CardContent>
