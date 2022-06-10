@@ -11,7 +11,10 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 import MenuItem from "@mui/material/MenuItem";
+import Divider from "@mui/material/Divider";
 //
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
@@ -61,9 +64,25 @@ const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
                 console.log("delete/hide roar err: ", err);
             });
     };
+    const picContent = (items: Array<any>) => {
+        if (items.length === 0) {
+            return "";
+        }
+        return items.map((item: any) => (
+            <ImageListItem key={item.title}>
+                <img
+                    src={`${item.url}?w=164&h=164&fit=crop&auto=format`}
+                    srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                    alt={item.title}
+                    loading="lazy"
+                />
+            </ImageListItem>
+        ));
+    };
 
     //const content = data.map((item: any) => {});
     const content = roars.map((item: any) => {
+        console.log("====> fe item: ", item.pics);
         const openHM = Boolean(headMenuEl);
         const handleHeadMenuClose = () => {};
 
@@ -102,7 +121,11 @@ const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
                         }
                     ></CardHeader>
                     <CardContent>
-                        <Typography variant="h5">{item.content}</Typography>
+                        <Typography variant="h6">{item.content}</Typography>
+                        <Divider />
+                        <ImageList sx={{ width: "100%" }} cols={3}>
+                            {picContent(item.pics)}
+                        </ImageList>
                     </CardContent>
                 </Card>
             </Grid>

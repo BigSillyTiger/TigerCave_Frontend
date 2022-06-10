@@ -11,13 +11,17 @@ import MenuItem from "@mui/material/MenuItem";
 // icon
 import NoteAltOutlinedIcon from "@mui/icons-material/NoteAltOutlined";
 import NewPostModal from "./newPostModal";
-import { clearULThunk } from "../../redux_store/features/uploadIMG/uploadIMGSlice";
+import {
+    clearULThunk,
+    clearUploadList,
+} from "../../redux_store/features/uploadIMG/uploadIMGSlice";
 
 type propsType = {
     clearULThunk: Function;
+    clearUploadList: Function;
 };
 
-const NewPostBtn: FC<propsType> = ({ clearULThunk }) => {
+const NewPostBtn: FC<propsType> = ({ clearULThunk, clearUploadList }) => {
     const [postAnchEl, setPostAnchEl] = useState(null);
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const handleModalOpen = (value: boolean) => {
@@ -34,9 +38,10 @@ const NewPostBtn: FC<propsType> = ({ clearULThunk }) => {
         setPostAnchEl(null);
         handleModalOpen(true);
     };
-    const handleCloseModal = () => {
+    const handleCloseModal = (clear: boolean) => {
         handleModalOpen(false);
-        clearULThunk();
+        if (clear) clearULThunk();
+        else clearUploadList();
     };
 
     return (
@@ -78,4 +83,4 @@ const NewPostBtn: FC<propsType> = ({ clearULThunk }) => {
     );
 };
 
-export default connect(null, { clearULThunk })(NewPostBtn);
+export default connect(null, { clearULThunk, clearUploadList })(NewPostBtn);

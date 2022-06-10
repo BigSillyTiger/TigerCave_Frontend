@@ -54,10 +54,9 @@ const NewPostModal: FC<propsType> = ({
 }) => {
     const [content, setContent] = useState("");
     const [files, setFiles] = useState("");
-    const [uploadPics, setUploadPics] = useState();
+
     const handlePostClick = () => {
-        //content === "" ? setContent("Blank Post") : "";
-        API_ROAR.newRoar({ content, uuid })
+        API_ROAR.newRoar(content, uuid, uploadList)
             .then((res) => {
                 console.log("--> ui rece: ", res);
                 if (1) {

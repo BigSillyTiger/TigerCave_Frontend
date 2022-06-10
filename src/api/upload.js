@@ -2,7 +2,6 @@ import apis from "./axios";
 import { REQ_ROAR_UPLOAD, REQ_CLEAR_UL } from "./req_list";
 
 export const upload = async (data, uuid) => {
-    console.log("--> fe test api: ", data);
     const formData = new FormData();
     formData.append("roarImg", data);
     const config = {
@@ -12,7 +11,7 @@ export const upload = async (data, uuid) => {
     };
     try {
         const response = await apis.post(
-            `${REQ_ROAR_UPLOAD}/:${uuid}`,
+            `${REQ_ROAR_UPLOAD}/${uuid}`,
             formData,
             config
         );

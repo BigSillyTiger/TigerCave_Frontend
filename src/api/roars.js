@@ -7,8 +7,12 @@ import {
 } from "./req_list";
 
 // POST
-export const newRoar = async (data) => {
-    console.log("--> fe add new roar: ", data);
+export const newRoar = async (content, uuid, pics) => {
+    const data = {
+        content,
+        uuid,
+        pics,
+    };
     try {
         const response = await apis.post(REQ_ROAR, { data });
         return response.data;
@@ -48,7 +52,7 @@ export const getRoars = async (type) => {
     }
     try {
         const response = await apis.get(req_path);
-        //console.log("-> front recv all post: ", response.data);
+        console.log("-> front recv all post: ", response.data);
         return response.data;
     } catch (err) {
         if (err.response) {
@@ -77,8 +81,6 @@ export const deleteRoar = async (deleteID) => {
         return false;
     }
 };
-
-
 
 // Archive a roar
 export const archiveRoar = async (archiveID, archiveFlag) => {

@@ -46,6 +46,7 @@ const Blog: FC<propsType> = ({ loginStatus, currentMenu, roarUpdate }) => {
             API_ROAR.getRoars("all")
                 .then((result) => {
                     const roarPosts = JSON.parse(result.content);
+                    console.log("=======> all post: ", roarPosts);
                     roarUpdate(roarPosts);
                 })
                 .catch((err) => {
