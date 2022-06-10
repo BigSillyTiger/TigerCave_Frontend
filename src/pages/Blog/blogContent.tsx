@@ -48,6 +48,14 @@ const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
         API_ROAR.archiveRoar(id, true)
             .then((res) => {
                 console.log("delete/hide roar succeed: ", res);
+                API_ROAR.getRoars("all")
+                    .then((result) => {
+                        const roarPosts = JSON.parse(result.content);
+                        roarUpdate(roarPosts);
+                    })
+                    .catch((err) => {
+                        console.log("err: ", err);
+                    });
             })
             .catch((err) => {
                 console.log("delete/hide roar err: ", err);

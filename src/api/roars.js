@@ -1,8 +1,14 @@
 import apis from "./axios";
-import { REQ_ROAR, REQ_ROAR_ADMIN } from "./req_list";
+import {
+    REQ_ROAR,
+    REQ_ROAR_ADMIN,
+    REQ_ROAR_UPLOAD,
+    REQ_CLEAR_UL,
+} from "./req_list";
 
 // POST
 export const newRoar = async (data) => {
+    console.log("--> fe add new roar: ", data);
     try {
         const response = await apis.post(REQ_ROAR, { data });
         return response.data;
@@ -71,6 +77,8 @@ export const deleteRoar = async (deleteID) => {
         return false;
     }
 };
+
+
 
 // Archive a roar
 export const archiveRoar = async (archiveID, archiveFlag) => {

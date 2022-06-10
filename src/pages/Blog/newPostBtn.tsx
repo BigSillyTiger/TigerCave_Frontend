@@ -1,4 +1,6 @@
 import React, { FC, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { connect } from "react-redux";
 // mui
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,13 +10,19 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 // icon
 import NoteAltOutlinedIcon from "@mui/icons-material/NoteAltOutlined";
+import NewPostModal from "./newPostModal";
+import { clearULThunk } from "../../redux_store/features/uploadIMG/uploadIMGSlice";
 
 type propsType = {
-    handleModal: Function;
+    clearULThunk: Function;
 };
 
-const NewPostBtn: FC<propsType> = ({ handleModal }) => {
+const NewPostBtn: FC<propsType> = ({ clearULThunk }) => {
     const [postAnchEl, setPostAnchEl] = useState(null);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const handleModalOpen = (value: boolean) => {
+        setModalOpen(value);
+    };
     const openBtn = Boolean(postAnchEl);
     const handleMenuClick = (event: any) => {
         setPostAnchEl(event.currentTarget);
@@ -24,7 +32,11 @@ const NewPostBtn: FC<propsType> = ({ handleModal }) => {
     };
     const handlePostClick = () => {
         setPostAnchEl(null);
-        handleModal(true);
+        handleModalOpen(true);
+    };
+    const handleCloseModal = () => {
+        handleModalOpen(false);
+        clearULThunk();
     };
 
     return (
@@ -43,7 +55,7 @@ const NewPostBtn: FC<propsType> = ({ handleModal }) => {
                 <NoteAltOutlinedIcon />
             </IconButton>
             <Menu
-                id="basic-menu"
+                id="basic-post-menu"
                 anchorEl={postAnchEl}
                 open={openBtn}
                 onClose={handlePostClose}
@@ -55,8 +67,15 @@ const NewPostBtn: FC<propsType> = ({ handleModal }) => {
                 <MenuItem onClick={handlePostClick}>Words</MenuItem>
                 <MenuItem onClick={handlePostClick}>Article</MenuItem>
             </Menu>
+
+            {/* modals for post new content */}
+            <NewPostModal
+                uuid={uuidv4()}
+                open={modalOpen}
+                onClose={handleCloseModal}
+            />
         </>
     );
 };
 
-export default NewPostBtn;
+export default connect(null, { clearULThunk })(NewPostBtn);

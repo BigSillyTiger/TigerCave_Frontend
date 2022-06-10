@@ -7,6 +7,7 @@ import React, {
     useEffect,
 } from "react";
 import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 // MUI
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -32,19 +33,13 @@ type propsType = {
     loginStatus: boolean;
     currentMenu: roar_menu_items;
     roarUpdate: any;
-    currentMenuUpdate: any;
 };
 
-const Blog: FC<propsType> = ({
-    loginStatus,
-    currentMenu,
-    roarUpdate,
-    currentMenuUpdate,
-}) => {
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
+const Blog: FC<propsType> = ({ loginStatus, currentMenu, roarUpdate }) => {
+    /* const [modalOpen, setModalOpen] = useState<boolean>(false);
     const handleModalOpen = (value: boolean) => {
         setModalOpen(value);
-    };
+    }; */
 
     useEffect(() => {
         if (currentMenu === "all") {
@@ -84,15 +79,7 @@ const Blog: FC<propsType> = ({
             </Container>
 
             {/* new post btn */}
-            {loginStatus ? <NewPostBtn handleModal={handleModalOpen} /> : ""}
-
-            {/* modals for post new content */}
-            <NewPostModal
-                open={modalOpen}
-                onClose={() => {
-                    handleModalOpen(false);
-                }}
-            />
+            {loginStatus ? <NewPostBtn /> : ""}
         </>
     );
 };
@@ -103,6 +90,6 @@ const mapStateToProps = (state: any) => {
     return { loginStatus, currentMenu };
 };
 
-export default connect(mapStateToProps, { roarUpdate, currentMenuUpdate })(
-    Blog
-);
+export default connect(mapStateToProps, {
+    roarUpdate,
+})(Blog);

@@ -1,31 +1,41 @@
 import React, { FC, useState } from "react";
 import { connect } from "react-redux";
+
 // mui
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
-//
-import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+//icons
+import { FileUpload } from "@mui/icons-material";
 
+//
+
+import FilesUpload from "../../components/fileUpload";
+import { roar_menu_items } from "../../config/pageConfig";
 import { API_ROAR } from "../../api";
 import {
     roarUpdate,
     selectRoarMenu,
 } from "../../redux_store/features/roar/roarSlice";
-import { roar_menu_items } from "../../config/pageConfig";
+import {
+    selectUploadIMG,
+    ULType,
+} from "../../redux_store/features/uploadIMG/uploadIMGSlice";
 
 type propsType = {
+    uuid: string;
     open: boolean;
     onClose: any;
     currentMenu: roar_menu_items;
     roarUpdate: any;
+    uploadList: Array<ULType>;
 };
 
 /* const StyledDialog = styled(Dialog)(({ theme }) => ({
@@ -34,19 +44,20 @@ type propsType = {
     margin: "0 auto",
 })); */
 
-const Input = styled("input")({
-    display: "none",
-});
-
 const NewPostModal: FC<propsType> = ({
+    uuid,
     open,
     onClose,
     currentMenu,
     roarUpdate,
+    uploadList,
 }) => {
     const [content, setContent] = useState("");
+    const [files, setFiles] = useState("");
+    const [uploadPics, setUploadPics] = useState();
     const handlePostClick = () => {
-        API_ROAR.newRoar(content)
+        //content === "" ? setContent("Blank Post") : "";
+        API_ROAR.newRoar({ content, uuid })
             .then((res) => {
                 console.log("--> ui rece: ", res);
                 if (1) {
@@ -69,9 +80,26 @@ const NewPostModal: FC<propsType> = ({
         setContent(event.target.value);
     };
 
+    const uploadlistContent = (items: ULType[]) => {
+        return (
+            <ImageList sx={{ width: "100%" }} cols={3}>
+                {items.map((item) => (
+                    <ImageListItem key={item.title}>
+                        <img
+                            src={`${item.url}?w=164&h=164&fit=crop&auto=format`}
+                            srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                            alt={item.title}
+                            loading="lazy"
+                        />
+                    </ImageListItem>
+                ))}
+            </ImageList>
+        );
+    };
+
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
-            <DialogTitle>Words Post:</DialogTitle>
+            <DialogTitle>Words Post: {uuid}</DialogTitle>
             <DialogContent>Something you wanna share~</DialogContent>
             <Box
                 component="form"
@@ -92,21 +120,8 @@ const NewPostModal: FC<propsType> = ({
                     minRows={2}
                     onChange={handleContent}
                 />
-                <label htmlFor="icon-upload-btn">
-                    <Input
-                        accept="image/*"
-                        id="icon-upload-btn"
-                        multiple
-                        type="file"
-                    />
-                    <IconButton
-                        color="primary"
-                        aria-label="upload-pics"
-                        component="span"
-                    >
-                        <InsertPhotoIcon />
-                    </IconButton>
-                </label>
+                <FilesUpload uuid={uuid} files={files} setFiles={setFiles} />
+                {uploadList.length > 0 ? uploadlistContent(uploadList) : ""}
             </Box>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
@@ -118,7 +133,8 @@ const NewPostModal: FC<propsType> = ({
 
 const mapStateToProps = (state: any) => {
     const currentMenu = selectRoarMenu(state);
-    return { currentMenu };
+    const uploadList = selectUploadIMG(state);
+    return { currentMenu, uploadList };
 };
 
 export default connect(mapStateToProps, { roarUpdate })(NewPostModal);
