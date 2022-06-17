@@ -4,6 +4,7 @@ import {
     REQ_ROAR_ADMIN,
     REQ_ROAR_UPLOAD,
     REQ_CLEAR_UL,
+    REQ_ROAR_WITH_PICS,
 } from "./req_list";
 
 // POST
@@ -35,8 +36,8 @@ export const getRoars = async (type) => {
         case "all":
             req_path = REQ_ROAR;
             break;
-        case "pics":
-            req_path = REQ_ROAR;
+        case "roar_with_pics":
+            req_path = REQ_ROAR_WITH_PICS;
             break;
         case "words":
             req_path = REQ_ROAR;
@@ -52,7 +53,6 @@ export const getRoars = async (type) => {
     }
     try {
         const response = await apis.get(req_path);
-        console.log("-> front recv all post: ", response.data);
         return response.data;
     } catch (err) {
         if (err.response) {

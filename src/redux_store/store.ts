@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginReducer from "./features/login/loginSlice";
 import roarReducer from "./features/roar/roarSlice";
+import themeReducer from "./features/theme/themeSlice";
 import uploadIMGReducer from "./features/uploadIMG/uploadIMGSlice";
 
 const store = configureStore({
@@ -8,6 +9,7 @@ const store = configureStore({
         login: loginReducer,
         roar: roarReducer,
         uploadIMG: uploadIMGReducer,
+        theme: themeReducer,
     },
 });
 

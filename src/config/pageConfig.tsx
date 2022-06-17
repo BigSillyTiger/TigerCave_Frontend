@@ -13,7 +13,7 @@ export type mainCfgType = {
 export const homePage: mainCfgType = {
     title: "Home",
     path: "/",
-    content: <div>Home page</div>,
+    content: <HomePage />,
 };
 
 export const mainMenuCfg: mainCfgType[] = [

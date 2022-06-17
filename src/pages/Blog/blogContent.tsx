@@ -27,7 +27,7 @@ import { dateFormat } from "../../config/utils";
 
 type propsType = {
     roars: any;
-    roarUpdate: any;
+    roarUpdate: Function;
 };
 
 const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
@@ -68,7 +68,7 @@ const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
         if (items.length === 0) {
             return "";
         }
-        return items.map((item: any) => (
+        const newContent = items.map((item: any) => (
             <ImageListItem key={item.title}>
                 <img
                     src={`${item.url}?w=164&h=164&fit=crop&auto=format`}
@@ -78,6 +78,14 @@ const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
                 />
             </ImageListItem>
         ));
+        return (
+            <>
+                <Divider />
+                <ImageList sx={{ width: "100%" }} cols={3}>
+                    {newContent}
+                </ImageList>
+            </>
+        );
     };
 
     //const content = data.map((item: any) => {});
@@ -122,10 +130,7 @@ const BlogContent: FC<propsType> = ({ roars, roarUpdate }) => {
                     ></CardHeader>
                     <CardContent>
                         <Typography variant="h6">{item.content}</Typography>
-                        <Divider />
-                        <ImageList sx={{ width: "100%" }} cols={3}>
-                            {picContent(item.pics)}
-                        </ImageList>
+                        {item.pics.length > 0 ? picContent(item.pics) : null}
                     </CardContent>
                 </Card>
             </Grid>

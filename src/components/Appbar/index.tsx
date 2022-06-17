@@ -12,7 +12,7 @@ import MobilMenuList from "./mobilMenuList";
 
 const TopBar: FC = () => {
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{ bgcolor: "#ffa726" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters variant="dense">
                     {/* mobile */}
