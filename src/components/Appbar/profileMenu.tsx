@@ -15,7 +15,7 @@ import { API_LOGIN } from "../../api";
 
 type propsType = {
     fg: number;
-    userLogout: any;
+    userLogout: Function;
 };
 
 const ProfileMenu: FC<propsType> = ({ fg, userLogout }) => {

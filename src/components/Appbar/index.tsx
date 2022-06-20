@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { connect } from "react-redux";
 // MUI
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -9,10 +10,16 @@ import LogProMenu from "./interMenu";
 import Logo from "./logo";
 import MenuList from "./menuList";
 import MobilMenuList from "./mobilMenuList";
+import MaterialUISwitch from "../styledComponents/lightSwitch.style";
+import { switchTheme } from "../../redux_store/features/theme/themeSlice";
 
-const TopBar: FC = () => {
+type prpsType = {
+    switchTheme: Function;
+};
+
+const TopBar: FC<prpsType> = ({ switchTheme }) => {
     return (
-        <AppBar position="static" sx={{ bgcolor: "#ffa726" }}>
+        <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters variant="dense">
                     {/* mobile */}
@@ -34,12 +41,17 @@ const TopBar: FC = () => {
                         sx={{
                             display: { xs: "none", md: "flex" },
                             width: "100%",
+                            alignItems: "center",
                         }}
                     >
                         <Logo fg={1} />
                         {/* flexgrow 1 */}
                         <MenuList fg={3} />
                         {/* flexgrow 3 */}
+                        <MaterialUISwitch
+                            sx={{ marginRight: "2rem" }}
+                            onClick={() => switchTheme()}
+                        />
                         <LogProMenu fg={0} />
                         {/* flexgrow 0 */}
                     </Box>
@@ -49,4 +61,4 @@ const TopBar: FC = () => {
     );
 };
 
-export default TopBar;
+export default connect(null, { switchTheme })(TopBar);

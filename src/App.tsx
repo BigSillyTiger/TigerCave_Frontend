@@ -1,3 +1,4 @@
+import React, { FC } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { connect } from "react-redux";
@@ -6,6 +7,7 @@ import Layout from "./components/layout";
 import { mainMenuCfg, mainCfgType, homePage } from "./config/pageConfig";
 import { selectTheme } from "./redux_store/features/theme/themeSlice";
 import { themeA, themeB } from "./config/themes";
+import Box from "@mui/material/Box";
 
 // only for testing
 import Gmath from "./pages/GamesLibrary/Gmath";
@@ -14,11 +16,15 @@ const routerContent = mainMenuCfg.map((item: mainCfgType) => (
     <Route key={item.title} path={item.path} element={item.content} />
 ));
 
-function App() {
+type propType = {
+    themeState: boolean;
+};
+
+const App: FC<propType> = ({ themeState }) => {
     return (
-        <ThemeProvider theme={themeA}>
+        <ThemeProvider theme={themeState ? themeA : themeB}>
             <Router>
-                <div className="App">
+                <Box>
                     <Layout>
                         <Routes>
                             <Route
@@ -29,11 +35,11 @@ function App() {
                             <Route path={"/game-math"} element={<Gmath />} />
                         </Routes>
                     </Layout>
-                </div>
+                </Box>
             </Router>
         </ThemeProvider>
     );
-}
+};
 
 const mapStateToProps = (state: any) => {
     const themeState = selectTheme(state);
