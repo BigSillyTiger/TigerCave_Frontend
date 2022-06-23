@@ -15,7 +15,7 @@ type propType = {
 
 const simpleCard: FC<propType> = ({ img, title, content }) => {
     return (
-        <Card variant="outlined">
+        <Card /* raised */>
             {/* <CardActionArea> */}
             <CardMedia component="img" height="270" image={img} alt={title} />
             <CardContent>

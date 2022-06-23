@@ -45,3 +45,10 @@ export const Roar_Menu_Config = [
 ];
 
 export type roar_menu_items = "all" | "pics" | "words" | "articles" | "archive";
+
+interface roarBasic {
+    _id: string;
+    content: string;
+    date: string;
+    pairedId: string;
+}

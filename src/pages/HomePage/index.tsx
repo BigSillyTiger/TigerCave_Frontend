@@ -10,6 +10,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 import Stack from "@mui/material/Stack";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import Divider from "@mui/material/Divider";
 //
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -48,7 +49,7 @@ const HomePage: FC = () => {
 
     const imgContent = (items: any[]) => {
         return items.map((item: any) => (
-            <Card sx={{ maxWidth: 345 }} key={item._id}>
+            <Card sx={{ maxWidth: 345 }} key={item._id} variant="outlined">
                 <CardActionArea>
                     <CardMedia
                         component="img"
@@ -95,7 +96,7 @@ const HomePage: FC = () => {
 
     const cardlistArea = (items: any) => {
         return items.map((item: any) => (
-            <Card sx={{ display: "flex" }}>
+            <Card sx={{ display: "flex" }} /* raised */>
                 <CardMedia
                     component="img"
                     height="100"
@@ -125,6 +126,26 @@ const HomePage: FC = () => {
         ));
     };
 
+    const StayInTouch = () => {
+        return (
+            <Paper elevation={2} sx={{ padding: "0.5rem" }}>
+                <Typography variant="h6" align="center">
+                    Stay In Touch
+                </Typography>
+                <Divider variant="middle" />
+                <Stack
+                    direction="row"
+                    spacing={2}
+                    alignItems="center"
+                    justifyContent="center"
+                >
+                    <InsIcon />
+                    <WBIcon />
+                </Stack>
+            </Paper>
+        );
+    };
+
     return (
         <>
             <Hero />
@@ -148,20 +169,7 @@ const HomePage: FC = () => {
                     </Grid>
                     <Grid item container xs={0} lg={3} spacing={3}>
                         <Grid item xs={12}>
-                            <Paper elevation={2}>
-                                <Typography variant="h6">
-                                    Stay In Touch
-                                </Typography>
-                                <Stack
-                                    direction="row"
-                                    spacing={2}
-                                    alignItems="center"
-                                    justifyContent="center"
-                                >
-                                    <InsIcon />
-                                    <WBIcon />
-                                </Stack>
-                            </Paper>
+                            <StayInTouch />
                         </Grid>
                         <Grid item xs={12}></Grid>
                     </Grid>

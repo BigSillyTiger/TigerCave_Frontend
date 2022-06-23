@@ -9,5 +9,8 @@ export const themeA = createTheme({
 export const themeB = createTheme({
     palette: {
         mode: "dark",
+        background: {
+            default: "#000",
+        },
     },
 });

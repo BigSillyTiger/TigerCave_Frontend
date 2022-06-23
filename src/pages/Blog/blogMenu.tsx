@@ -102,7 +102,7 @@ const BlogMenu: FC<propsType> = ({
     });
 
     return (
-        <Paper elevation={2}>
+        <Paper elevation={3}>
             <List
                 sx={{ padding: "0.5rem", bgcolor: "background.paper" }}
                 component="nav"

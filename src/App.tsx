@@ -7,7 +7,8 @@ import Layout from "./components/layout";
 import { mainMenuCfg, mainCfgType, homePage } from "./config/pageConfig";
 import { selectTheme } from "./redux_store/features/theme/themeSlice";
 import { themeA, themeB } from "./config/themes";
-import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import CssBaseline from "@mui/material/CssBaseline";
 
 // only for testing
 import Gmath from "./pages/GamesLibrary/Gmath";
@@ -23,8 +24,9 @@ type propType = {
 const App: FC<propType> = ({ themeState }) => {
     return (
         <ThemeProvider theme={themeState ? themeA : themeB}>
+            <CssBaseline />
             <Router>
-                <Box>
+                <div>
                     <Layout>
                         <Routes>
                             <Route
@@ -35,7 +37,7 @@ const App: FC<propType> = ({ themeState }) => {
                             <Route path={"/game-math"} element={<Gmath />} />
                         </Routes>
                     </Layout>
-                </Box>
+                </div>
             </Router>
         </ThemeProvider>
     );

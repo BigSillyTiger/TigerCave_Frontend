@@ -84,7 +84,6 @@ export const deleteRoar = async (deleteID) => {
 
 // Archive a roar
 export const archiveRoar = async (archiveID, archiveFlag) => {
-    console.log("=<< api recv hideID: ", archiveID);
     const data = {
         archiveID,
         archiveFlag,
