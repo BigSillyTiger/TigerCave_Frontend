@@ -95,8 +95,8 @@ const HomePage: FC = () => {
     );
 
     const cardlistArea = (items: any) => {
-        return items.map((item: any) => (
-            <Card sx={{ display: "flex" }} /* raised */>
+        return items.map((item: any, index: number) => (
+            <Card sx={{ display: "flex" }} key={index} /* raised */>
                 <CardMedia
                     component="img"
                     height="100"

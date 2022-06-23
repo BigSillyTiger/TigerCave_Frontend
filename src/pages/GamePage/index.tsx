@@ -20,9 +20,9 @@ const GAMES = [{ name: "game-1" }, { name: "game-2" }, { name: "game-3" }];
 
 const Games = () => {
     const gamesCards = (games: any) => {
-        return games.map((game: any) => {
+        return games.map((game: any, index: number) => {
             return (
-                <Grid item xs={4}>
+                <Grid item xs={4} key={index}>
                     <Link to={"/game-math"}>
                         <Card>
                             <CardContent>

@@ -17,7 +17,7 @@ export const clearULThunk = createAsyncThunk(
     async (_, { dispatch: Function, getState }) => {
         try {
             const state = getState() as RootState;
-            API_UPLOAD.clearUnpostImgs(state.uploadIMG.uploadIMGState)
+            API_UPLOAD.clearUppostImgs(state.uploadIMG.uploadIMGState)
                 .then((result) => {
                     console.log("===> thunk result: ", result);
                 })

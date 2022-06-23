@@ -69,7 +69,6 @@ export const deleteRoar = async (deleteID) => {
     console.log("api recv deleteID: ", deleteID);
     try {
         const response = await apis.delete(`${REQ_ROAR}/${deleteID}`);
-        console.log("---< delete roar: ", response.data);
         return response.data;
     } catch (err) {
         if (err.response) {
@@ -90,7 +89,6 @@ export const archiveRoar = async (archiveID, archiveFlag) => {
     };
     try {
         const response = await apis.put(REQ_ROAR, { data });
-        console.log("---< delete roar: ", response.data);
         return response.data;
     } catch (err) {
         if (err.response) {

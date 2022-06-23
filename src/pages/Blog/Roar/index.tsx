@@ -87,7 +87,6 @@ const Roar: FC<propsType> = ({
     };
 
     const MoreVerBtn: FC<{ id: string }> = ({ id }) => {
-        const idToken = id;
         switch (currentRoarMenu) {
             case "all":
             case "pics":
