@@ -5,6 +5,8 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import { API_ROAR, API_UPLOAD } from "../api";
 import { updateUploadList } from "../redux_store/features/uploadIMG/uploadIMGSlice";
 import { selectUploadIMG } from "../redux_store/features/uploadIMG/uploadIMGSlice";
@@ -29,12 +31,14 @@ const FilesUpload: FC<propsType> = ({
     uploadList,
 }) => {
     const [alertOpen, setAlertOpen] = React.useState(false);
+    const [loader, setLoader] = React.useState(false);
     const handleUpload = (event: any) => {
         const uploadfiles = event.target.files;
         if (uploadfiles.length > 9 || uploadList.length === 9) {
             setAlertOpen(true);
             return 0;
         }
+        setLoader(true);
         console.log("===> upload files: ", event.target.files);
         //file.isUploading = true;
         setFiles([...files, uploadfiles]);
@@ -46,9 +50,11 @@ const FilesUpload: FC<propsType> = ({
                 for (let i = 0; i < result.imgURLs.length; i++) {
                     updateUploadList(result.imgURLs[i]);
                 }
+                setLoader(false);
             })
             .catch((err) => {
                 console.log("===> upload err: ", err);
+                setLoader(false);
             });
     };
     const handleAlertClose = () => {
@@ -79,12 +85,21 @@ const FilesUpload: FC<propsType> = ({
             >
                 <Alert
                     onClose={handleAlertClose}
-                    severity="error"
+                    severity="warning"
                     sx={{ width: "100%" }}
                 >
                     Only 9 pictures allowed in total!
                 </Alert>
             </Snackbar>
+            <Backdrop
+                sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={loader}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </>
     );
 };
