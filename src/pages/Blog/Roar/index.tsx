@@ -51,7 +51,7 @@ const Roar: FC<propsType> = ({
     const archiveRoar = (id: string | number, flag: boolean) => {
         API_ROAR.archiveRoar(id, flag)
             .then((res) => {
-                console.log("delete/hide roar succeed: ", res);
+                console.log("Archive roar succeed: ", res);
                 API_ROAR.getRoars(currentRoarMenu)
                     .then((result) => {
                         const roarPosts = JSON.parse(result.content);
@@ -63,7 +63,26 @@ const Roar: FC<propsType> = ({
                     });
             })
             .catch((err) => {
-                console.log("delete/hide roar err: ", err);
+                console.log("Archive roar err: ", err);
+            });
+    };
+
+    const deleteRoar = (id: string) => {
+        API_ROAR.deleteRoar(id)
+            .then((res) => {
+                API_ROAR.getRoars(currentRoarMenu)
+                    .then((result) => {
+                        console.log("Delete roar succeed: ", res);
+                        const roarPosts = JSON.parse(result.content);
+                        console.log("=> update roars: ", roarPosts);
+                        roarUpdate(roarPosts);
+                    })
+                    .catch((err) => {
+                        console.log("err: ", err);
+                    });
+            })
+            .catch((err) => {
+                console.log("delete roar err: ", err);
             });
     };
 
@@ -75,25 +94,37 @@ const Roar: FC<propsType> = ({
             case "words":
             case "articles":
                 return (
-                    <MenuItem
-                        onClick={() => {
-                            archiveRoar(id, true);
-                            handleMenuClose();
-                        }}
-                    >
-                        Archive {idToken}
-                    </MenuItem>
+                    <>
+                        <MenuItem
+                            onClick={() => {
+                                archiveRoar(id, true);
+                                handleMenuClose();
+                            }}
+                        >
+                            Archive
+                        </MenuItem>
+                    </>
                 );
             case "archive":
                 return (
-                    <MenuItem
-                        onClick={() => {
-                            archiveRoar(id, false);
-                            handleMenuClose();
-                        }}
-                    >
-                        Unarchive
-                    </MenuItem>
+                    <>
+                        <MenuItem
+                            onClick={() => {
+                                archiveRoar(id, false);
+                                handleMenuClose();
+                            }}
+                        >
+                            Unarchive
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => {
+                                deleteRoar(id);
+                                handleMenuClose();
+                            }}
+                        >
+                            Delete
+                        </MenuItem>
+                    </>
                 );
             default:
                 return (
